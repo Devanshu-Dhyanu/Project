@@ -207,6 +207,13 @@ body{
 
 }
 
+#product1 .pro-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-top: 20px;
+}
 
 #product1 .pro{
     width: 23%;
