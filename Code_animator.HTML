@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 Code Animator for Kids</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: #EEF0FF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ── */
+header {
+  background: white;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 3px solid #E0E7FF;
+}
+.logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 26px;
+  color: #4F46E5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo em { color: #F43F5E; font-style: normal; }
+.tagline { color: #9CA3AF; font-size: 14px; font-weight: 700; }
+.header-right {
+  margin-left: auto;
+  font-size: 13px;
+  color: #C7D2FE;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  display: flex;
+  flex: 1;
+  padding: 18px;
+  gap: 18px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+/* ── EDITOR PANEL ── */
+.editor-panel {
+  width: 44%;
+  min-width: 300px;
+  background: white;
+  border-radius: 20px;
+  border: 2.5px solid #E0E7FF;
+  box-shadow: 0 4px 24px rgba(79,70,229,.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel-hdr {
+  padding: 13px 18px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.editor-hdr { background: #4F46E5; color: white; }
+
+.code-wrap {
+  display: flex;
+  flex: 1;
+  min-height: 200px;
+}
+.line-nums {
+  background: #F5F7FF;
+  padding: 14px 10px 14px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #C4C9EE;
+  text-align: right;
+  user-select: none;
+  min-width: 36px;
+  border-right: 2px solid #E0E7FF;
+  overflow: hidden;
+}
+#code-editor {
+  flex: 1;
+  padding: 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  border: none;
+  outline: none;
+  resize: none;
+  color: #1E1B4B;
+  background: #FAFBFF;
+  tab-size: 4;
+  min-height: 200px;
+}
+
+.editor-footer {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 2px solid #E0E7FF;
+  flex-wrap: wrap;
+}
+
+.run-btn {
+  padding: 11px 22px;
+  background: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #3730A3;
+  transition: transform .1s, box-shadow .1s;
+}
+.run-btn:hover { background: #4338CA; }
+.run-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3730A3; }
+.run-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: 0 4px 0 #3730A3; }
+
+.reset-btn {
+  padding: 9px 16px;
+  background: none;
+  border: 2px solid #E0E7FF;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  color: #6B7280;
+  font-size: 14px;
+}
+.reset-btn:hover { background: #F3F4F6; }
+
+.speed-grp {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9CA3AF;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.spd {
+  padding: 5px 10px;
+  background: #F3F4F6;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .15s;
+}
+.spd.active { background: #EEF2FF; border-color: #4F46E5; }
+
+.examples-sec {
+  padding: 12px 14px;
+  border-top: 2px solid #EEF2FF;
+}
+.ex-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #A5B4FC;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  padding: 5px 13px;
+  background: #EEF2FF;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #4F46E5;
+  transition: all .15s;
+}
+.chip:hover { background: #4F46E5; color: white; }
+
+/* ── ANIMATION PANEL ── */
+.anim-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* Step bar */
+.step-bar {
+  background: white;
+  border-radius: 14px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border: 2.5px solid #E0E7FF;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
+  min-height: 48px;
+}
+.step-badge {
+  background: #4F46E5;
+  color: white;
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Row for vars + output */
+.stage-row {
+  display: flex;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Shared card */
+.stage-card {
+  background: white;
+  border-radius: 20px;
+  border: 2.5px solid #E0E7FF;
+  box-shadow: 0 4px 24px rgba(0,0,0,.07);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.card-hdr {
+  padding: 10px 16px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 15px;
+}
+.vars-hdr { background: #0EA5E9; color: white; }
+.out-hdr  { background: #F59E0B; color: white; }
+
+#variables-grid {
+  padding: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+  overflow-y: auto;
+  flex: 1;
+}
+#output-list {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.empty-hint {
+  color: #D1D5DB;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px;
+}
+
+/* ── VARIABLE CARDS ── */
+.var-card {
+  border-radius: 14px;
+  padding: 10px 14px;
+  min-width: 72px;
+  text-align: center;
+  border: 3px solid;
+  animation: popIn .35s cubic-bezier(.34,1.56,.64,1) both;
+}
+.var-card.shake { animation: shake .4s ease both !important; }
+
+@keyframes popIn {
+  from { transform: scale(.3) rotate(-8deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+@keyframes shake {
+  0%,100% { transform: scale(1); }
+  25%     { transform: scale(1.15) rotate(-3deg); }
+  75%     { transform: scale(1.12) rotate(3deg); }
+}
+
+.var-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  opacity: .85;
+}
+.var-val {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  line-height: 1.2;
+  word-break: break-all;
+}
+
+/* ── OUTPUT BUBBLES ── */
+.print-bubble {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #FEF3C7;
+  border: 2px solid #FCD34D;
+  border-radius: 12px 12px 12px 4px;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #92400E;
+  animation: slideIn .3s ease both;
+  align-self: flex-start;
+  max-width: 100%;
+  word-break: break-word;
+}
+.cond-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px 12px 12px 4px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  animation: slideIn .3s ease both;
+  align-self: flex-start;
+}
+.cond-true  { background: #D1FAE5; border: 2px solid #34D399; color: #065F46; }
+.cond-false { background: #FEE2E2; border: 2px solid #F87171; color: #991B1B; }
+
+@keyframes slideIn {
+  from { transform: translateX(-14px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+/* Loop dots in step bar */
+.loop-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FF9A3C;
+  color: white;
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.ldot {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  transition: background .2s;
+}
+.ldot.done { background: white; }
+
+/* Celebration */
+.celebration {
+  font-family: 'Fredoka One', cursive;
+  font-size: 17px;
+  color: #4F46E5;
+  animation: zoomIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes zoomIn {
+  from { transform: scale(.7); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C7D2FE; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🎬 Code<em>Anim</em></div>
+  <div class="tagline">Watch your code come alive — step by step!</div>
+  <div class="header-right">Python-like code ✨</div>
+</header>
+
+<div class="main">
+
+  <!-- ══ LEFT: Editor ══ -->
+  <div class="editor-panel">
+    <div class="panel-hdr editor-hdr">✏️ Write your code here</div>
+
+    <div class="code-wrap">
+      <div class="line-nums" id="line-nums">1</div>
+      <textarea id="code-editor" spellcheck="false" oninput="syncLines()">x = 5
+y = 3
+z = x + y
+print(z)
+for i in range(4):
+    print(i)
+if x > y:
+    print("x wins!")
+else:
+    print("y wins!")</textarea>
+    </div>
+
+    <div class="editor-footer">
+      <button class="run-btn" id="run-btn" onclick="runCode()">▶ Run!</button>
+      <button class="reset-btn" onclick="resetAll()">↺ Clear</button>
+      <div class="speed-grp">
+        Speed
+        <button class="spd active" onclick="setSpeed(950,this)">🐢</button>
+        <button class="spd" onclick="setSpeed(450,this)">🐇</button>
+        <button class="spd" onclick="setSpeed(100,this)">⚡</button>
+      </div>
+    </div>
+
+    <div class="examples-sec">
+      <div class="ex-label">✨ Try an example</div>
+      <div class="chips">
+        <button class="chip" onclick="loadEx('vars')">📦 Variables</button>
+        <button class="chip" onclick="loadEx('loop')">🔄 Loop</button>
+        <button class="chip" onclick="loadEx('ifelse')">🔀 If / Else</button>
+        <button class="chip" onclick="loadEx('names')">👋 Names</button>
+        <button class="chip" onclick="loadEx('all')">🌟 Big Example</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT: Animation Stage ══ -->
+  <div class="anim-panel">
+
+    <div class="step-bar" id="step-bar">
+      👋 Press <strong style="color:#4F46E5">▶ Run!</strong> and watch your code come to life!
+    </div>
+
+    <div class="stage-row">
+
+      <!-- Variables -->
+      <div class="stage-card">
+        <div class="card-hdr vars-hdr">📦 Memory Boxes (Variables)</div>
+        <div id="variables-grid">
+          <div class="empty-hint">Variables will appear here...</div>
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="stage-card">
+        <div class="card-hdr out-hdr">🖨️ Output (print results)</div>
+        <div id="output-list">
+          <div class="empty-hint">Output will appear here...</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────
+const COLORS = [
+  { bg:'#FFF0F0', bd:'#FF6B6B', text:'#B91C1C', lbl:'#EF4444' },
+  { bg:'#F0FDFF', bd:'#22D3EE', text:'#0E7490', lbl:'#0EA5E9' },
+  { bg:'#F5F0FF', bd:'#A78BFA', text:'#5B21B6', lbl:'#7C3AED' },
+  { bg:'#FFFBEB', bd:'#FCD34D', text:'#92400E', lbl:'#D97706' },
+  { bg:'#F0FFF4', bd:'#4ADE80', text:'#166534', lbl:'#16A34A' },
+  { bg:'#FFF0F9', bd:'#F472B6', text:'#9D174D', lbl:'#DB2777' },
+  { bg:'#EFF6FF', bd:'#60A5FA', text:'#1E40AF', lbl:'#2563EB' },
+];
+
+const EXAMPLES = {
+  vars:  `x = 10\ny = 7\nresult = x + y\nprint(result)`,
+  loop:  `total = 0\nfor i in range(5):\n    total = total + i\n    print(total)`,
+  ifelse:`score = 75\nif score > 60:\n    print("You passed!")\nelse:\n    print("Try again!")`,
+  names: `name = "Alex"\nage = 12\npoints = 100\nprint(name)\nprint(age)\nprint(points)`,
+  all:   `x = 8\ny = 3\nz = x + y\nprint(z)\nfor i in range(3):\n    x = x - 1\n    print(x)\nif x > y:\n    print("x is bigger")\nelse:\n    print("y is bigger")`
+};
+
+let animSpeed = 950;
+let varColors = {};
+let colorIdx = 0;
+let isRunning = false;
+
+// ─── UI HELPERS ───────────────────────────────────────────
+function syncLines() {
+  const lines = document.getElementById('code-editor').value.split('\n').length;
+  document.getElementById('line-nums').innerHTML =
+    Array.from({length: lines}, (_, i) => i + 1).join('<br>');
+}
+syncLines();
+
+function loadEx(k) {
+  document.getElementById('code-editor').value = EXAMPLES[k];
+  syncLines(); resetAll();
+}
+
+function setSpeed(s, btn) {
+  animSpeed = s;
+  document.querySelectorAll('.spd').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function resetAll() {
+  if (isRunning) { isRunning = false; }
+  varColors = {}; colorIdx = 0;
+  document.getElementById('run-btn').disabled = false;
+  document.getElementById('variables-grid').innerHTML =
+    '<div class="empty-hint">Variables will appear here...</div>';
+  document.getElementById('output-list').innerHTML =
+    '<div class="empty-hint">Output will appear here...</div>';
+  document.getElementById('step-bar').innerHTML =
+    '👋 Press <strong style="color:#4F46E5">▶ Run!</strong> and watch your code come to life!';
+}
+
+function getColor(name) {
+  if (!varColors[name]) { varColors[name] = COLORS[colorIdx++ % COLORS.length]; }
+  return varColors[name];
+}
+
+function disp(v) {
+  if (typeof v === 'string') return `"${v}"`;
+  return String(v);
+}
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── PARSER ───────────────────────────────────────────────
+function parse(code) {
+  const lines = code.split('\n');
+  let pos = 0;
+
+  function ind(line) { return (line.match(/^( *)/)||['',''])[1].length; }
+  function tri(l)    { return l.trim(); }
+
+  function parseBlock(minInd) {
+    const steps = [];
+    while (pos < lines.length) {
+      const line = lines[pos];
+      const t = tri(line);
+      if (!t || t.startsWith('#')) { pos++; continue; }
+      const i = ind(line);
+      if (i < minInd) break;
+
+      // for … in range(n):
+      let m = t.match(/^for\s+(\w+)\s+in\s+range\((\d+)\)\s*:$/);
+      if (m) {
+        const ln = pos++; const body = parseBlock(i + 1);
+        steps.push({ type:'for', v:m[1], n:parseInt(m[2]), body, ln }); continue;
+      }
+
+      // if …:
+      m = t.match(/^if\s+(.+?)\s*:$/);
+      if (m) {
+        const ln = pos++; const then = parseBlock(i + 1);
+        let els = [];
+        if (pos < lines.length && tri(lines[pos]) === 'else:') { pos++; els = parseBlock(i + 1); }
+        steps.push({ type:'if', cond:m[1], then, els, ln }); continue;
+      }
+
+      // print(…)
+      m = t.match(/^print\((.+)\)$/);
+      if (m) { steps.push({ type:'print', expr:m[1], ln:pos++ }); continue; }
+
+      // var = expr
+      m = t.match(/^(\w+)\s*=\s*(.+)$/);
+      if (m) { steps.push({ type:'assign', name:m[1], expr:m[2], ln:pos++ }); continue; }
+
+      pos++;
+    }
+    return steps;
+  }
+
+  return parseBlock(0);
+}
+
+// ─── EVALUATOR ────────────────────────────────────────────
+function evalE(expr, vars) {
+  try {
+    return new Function(...Object.keys(vars), `"use strict";return(${expr})`)(...Object.values(vars));
+  } catch { return '???'; }
+}
+
+// ─── EXECUTOR → frames ────────────────────────────────────
+function makeFrames(steps) {
+  let vars = {};
+  const frames = [];
+
+  function run(steps) {
+    for (const s of steps) {
+      if (s.type === 'assign') {
+        const val = evalE(s.expr, vars);
+        vars[s.name] = val;
+        frames.push({ kind:'assign', name:s.name, val, vars:{...vars},
+          desc:`Setting memory box <b>${s.name}</b> = <b>${esc(disp(val))}</b>` });
+
+      } else if (s.type === 'print') {
+        const val = evalE(s.expr, vars);
+        frames.push({ kind:'print', val, vars:{...vars},
+          desc:`print() shows: <b>${esc(disp(val))}</b>` });
+
+      } else if (s.type === 'for') {
+        for (let i = 0; i < s.n; i++) {
+          vars[s.v] = i;
+          frames.push({ kind:'loop', v:s.v, i, n:s.n, vars:{...vars},
+            desc:`Loop round <b>${i+1} of ${s.n}</b> — <b>${s.v}</b> = <b>${i}</b>` });
+          run(s.body);
+        }
+
+      } else if (s.type === 'if') {
+        const res = !!evalE(s.cond, vars);
+        frames.push({ kind:'cond', cond:s.cond, res, vars:{...vars},
+          desc:`Checking <b>${esc(s.cond)}</b> → ${res ? '✅ TRUE → going in!' : '❌ FALSE → skipping!'}` });
+        run(res ? s.then : s.els);
+      }
+    }
+  }
+
+  run(steps);
+  return frames;
+}
+
+// ─── RENDER HELPERS ───────────────────────────────────────
+function clearHints() {
+  document.querySelectorAll('#variables-grid .empty-hint, #output-list .empty-hint')
+    .forEach(el => el.remove());
+}
+
+function renderVar(name, val) {
+  const c   = getColor(name);
+  const grid = document.getElementById('variables-grid');
+  let card   = document.getElementById('vc-' + name);
+  const dv   = esc(disp(val));
+
+  if (card) {
+    card.querySelector('.var-val').innerHTML = dv;
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+  } else {
+    card = document.createElement('div');
+    card.className = 'var-card';
+    card.id = 'vc-' + name;
+    card.style.cssText = `background:${c.bg};border-color:${c.bd}`;
+    card.innerHTML = `
+      <div class="var-label" style="color:${c.lbl}">${name}</div>
+      <div class="var-val"   style="color:${c.text}">${dv}</div>`;
+    grid.appendChild(card);
+  }
+}
+
+function renderPrint(val) {
+  const el = document.createElement('div');
+  el.className = 'print-bubble';
+  el.innerHTML = `🖨️ ${esc(disp(val))}`;
+  const list = document.getElementById('output-list');
+  list.appendChild(el);
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function renderCond(cond, res) {
+  const el = document.createElement('div');
+  el.className = 'cond-bubble ' + (res ? 'cond-true' : 'cond-false');
+  el.innerHTML = `${res ? '✅' : '❌'} &nbsp;<code style="font-size:13px">${esc(cond)}</code>&nbsp; is ${res ? 'TRUE' : 'FALSE'}`;
+  const list = document.getElementById('output-list');
+  list.appendChild(el);
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function loopPill(v, i, n) {
+  const dots = Array.from({length:n}, (_,k) =>
+    `<span class="ldot${k<=i?' done':''}"></span>`).join('');
+  return `<span class="loop-pill">🔄 Round ${i+1}/${n} &nbsp;${dots}</span>`;
+}
+
+// ─── MAIN RUN ─────────────────────────────────────────────
+async function runCode() {
+  if (isRunning) return;
+  isRunning = true;
+  document.getElementById('run-btn').disabled = true;
+
+  resetAll(); await sleep(80);
+
+  const code = document.getElementById('code-editor').value;
+  let frames;
+  try {
+    frames = makeFrames(parse(code));
+  } catch(e) {
+    document.getElementById('step-bar').innerHTML =
+      '❌ Oops! There might be a bug in your code. Check it and try again!';
+    isRunning = false;
+    document.getElementById('run-btn').disabled = false;
+    return;
+  }
+
+  if (!frames.length) {
+    document.getElementById('step-bar').innerHTML =
+      '🤔 Nothing to animate! Try adding variables, loops or print().';
+    isRunning = false;
+    document.getElementById('run-btn').disabled = false;
+    return;
+  }
+
+  clearHints();
+
+  for (let fi = 0; fi < frames.length; fi++) {
+    if (!isRunning) break;
+    const f = frames[fi];
+
+    // Step bar
+    let extra = '';
+    if (f.kind === 'loop') extra = ' ' + loopPill(f.v, f.i, f.n);
+    document.getElementById('step-bar').innerHTML =
+      `<span class="step-badge">Step ${fi+1} / ${frames.length}</span> ${f.desc}${extra}`;
+
+    // Render
+    if      (f.kind === 'assign') renderVar(f.name, f.val);
+    else if (f.kind === 'loop')   renderVar(f.v, f.i);
+    else if (f.kind === 'print')  renderPrint(f.val);
+    else if (f.kind === 'cond')   renderCond(f.cond, f.res);
+
+    await sleep(animSpeed);
+  }
+
+  if (isRunning) {
+    document.getElementById('step-bar').innerHTML =
+      `<span class="celebration">🎉 All done! ${frames.length} steps ran perfectly!</span>`;
+  }
+  isRunning = false;
+  document.getElementById('run-btn').disabled = false;
+}
+</script>
+</body>
+</html>
