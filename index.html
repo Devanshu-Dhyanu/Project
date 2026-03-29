@@ -157,6 +157,16 @@ header {
   text-transform: uppercase;
   letter-spacing: .5px;
 }
+.lang-grp {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9CA3AF;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.lang-grp .spd { background: #F8F9FD; border-color: transparent; }
 .spd {
   padding: 5px 10px;
   background: #F3F4F6;
@@ -399,7 +409,7 @@ header {
 <header>
   <div class="logo">Code<em>Animator</em></div>
   <div class="tagline">Watch your code come alive — step by step!</div>
-  <div class="header-right">Python-like code ✨</div>
+  <div class="header-right">Python, C++, Java styles supported ✨</div>
 </header>
 
 <div class="main">
@@ -425,6 +435,12 @@ else:
     <div class="editor-footer">
       <button class="run-btn" id="run-btn" onclick="runCode()">▶ Run!</button>
       <button class="reset-btn" onclick="resetAll()">↺ Clear</button>
+      <div class="lang-grp">
+        Language
+        <button class="spd active lang-btn" data-lang="python" onclick="setLanguage('python', this)">Python-like</button>
+        <button class="spd lang-btn" data-lang="cpp" onclick="setLanguage('cpp', this)">C++</button>
+        <button class="spd lang-btn" data-lang="java" onclick="setLanguage('java', this)">Java</button>
+      </div>
       <div class="speed-grp">
         Speed
         <button class="spd active" onclick="setSpeed(950,this)">🐢</button>
@@ -441,6 +457,8 @@ else:
         <button class="chip" onclick="loadEx('ifelse')">🔀 If / Else</button>
         <button class="chip" onclick="loadEx('names')">👋 Names</button>
         <button class="chip" onclick="loadEx('all')">🌟 Big Example</button>
+        <button class="chip" onclick="loadEx('cpp')">💻 C++ Example</button>
+        <button class="chip" onclick="loadEx('java')">☕ Java Example</button>
       </div>
     </div>
   </div>
@@ -499,6 +517,7 @@ let animSpeed = 950;
 let varColors = {};
 let colorIdx = 0;
 let isRunning = false;
+let currentLang = 'python';
 
 // ─── UI HELPERS ───────────────────────────────────────────
 function syncLines() {
@@ -507,24 +526,40 @@ function syncLines() {
     Array.from({length: lines}, (_, i) => i + 1).join('<br>');
 }
 syncLines();
-
+setLanguage('python', document.querySelector('.lang-btn[data-lang="python"]'));
 function loadEx(k) {
+  if (k === 'cpp' || k === 'java') {
+    setLanguage(k, document.querySelector(`.lang-btn[data-lang="${k}"]`));
+  } else {
+    setLanguage('python', document.querySelector(`.lang-btn[data-lang="python"]`));
+  }
   document.getElementById('code-editor').value = EXAMPLES[k];
-  syncLines(); resetAll();
+  syncLines();
 }
 
 function setSpeed(s, btn) {
   animSpeed = s;
-  document.querySelectorAll('.spd').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.speed-grp .spd').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+}
+
+function setLanguage(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  resetAll();
+  const label = lang === 'python' ? 'Python-like code' : lang === 'cpp' ? 'C++ code' : 'Java code';
+  document.getElementById('step-bar').innerHTML = `👋 Press <strong style="color:#4F46E5">▶ Run!</strong> and watch ${label} come alive!`;
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-function resetAll() {
-  if (isRunning) { isRunning = false; }
+function resetAll(cancel = true) {
+  if (cancel && isRunning) { isRunning = false; }
   varColors = {}; colorIdx = 0;
-  document.getElementById('run-btn').disabled = false;
+  if (cancel) {
+    document.getElementById('run-btn').disabled = false;
+  }
   document.getElementById('variables-grid').innerHTML =
     '<div class="empty-hint">Variables will appear here...</div>';
   document.getElementById('output-list').innerHTML =
@@ -565,11 +600,18 @@ function parse(code) {
       const i = ind(line);
       if (i < minInd) break;
 
-      // for … in range(n):
-      let m = t.match(/^for\s+(\w+)\s+in\s+range\((\d+)\)\s*:$/);
+      // for … in range(n) or range(start, end):
+      let m = t.match(/^for\s+(\w+)\s+in\s+range\((\d+)(?:\s*,\s*(\d+))?\)\s*:\s*$/);
       if (m) {
         const ln = pos++; const body = parseBlock(i + 1);
-        steps.push({ type:'for', v:m[1], n:parseInt(m[2]), body, ln }); continue;
+        const start = parseInt(m[2]);
+        const end   = m[3] ? parseInt(m[3]) : null;
+        if (end === null) {
+          steps.push({ type:'for', v:m[1], n:start, body, ln });
+        } else {
+          steps.push({ type:'for', v:m[1], start, end, body, ln });
+        }
+        continue;
       }
 
       // if …:
@@ -604,6 +646,65 @@ function evalE(expr, vars) {
   } catch { return '???'; }
 }
 
+function normalizeCode(code, lang) {
+  if (lang === 'python') return code;
+  code = code.replace(/\/\/.*$/gm, '');
+  code = code.replace(/\/\*[\s\S]*?\*\//g, '');
+  code = code.replace(/^\s*#.*$/gm, '');
+  code = code.replace(/using\s+namespace\s+std\s*;/g, '');
+  code = code.replace(/std::cout/g, 'cout');
+  code = code.replace(/std::endl/g, 'endl');
+  code = code.replace(/System\.out\.println\s*\(/g, 'print(');
+  code = code.replace(/System\.out\.print\s*\(/g, 'print(');
+
+  code = code.replace(/\b(?:int|double|float|long|bool|char|String|auto)\s+([A-Za-z_]\w*)\s*=\s*([^;]+);/g, '$1 = $2');
+  code = code.replace(/\b(?:int|double|float|long|bool|char|String|auto)\s+([A-Za-z_]\w*)\s*;/g, '$1 = 0');
+
+  code = code.replace(/for\s*\(\s*(?:int\s+)?(\w+)\s*=\s*([^;]+?)\s*;\s*\1\s*<\s*([^;]+?)\s*;\s*\1\+\+\s*\)\s*\{/g,
+    'for $1 in range($2, $3):');
+
+  code = code.replace(/else\s+if\s*\((.+?)\)\s*\{/g, 'else:\n    if $1:');
+  code = code.replace(/if\s*\((.+?)\)\s*\{/g, 'if $1:');
+  code = code.replace(/else\s*\{/g, 'else:');
+
+  code = code.replace(/cout\s*<<\s*([^;]+);/g, (match, content) => {
+    const parts = content.split(/<<\s*/).map(p => p.trim()).filter(Boolean).map(p => p === 'endl' ? '"\n"' : p);
+    return `print(${parts.join(' + ')})`;
+  });
+  code = code.replace(/;\s*$/gm, '');
+
+  const normalized = [];
+  let indent = 0;
+  for (let rawLine of code.split('\n')) {
+    let line = rawLine.trim();
+    if (!line) continue;
+    if (line === '}' || line === '};') {
+      indent = Math.max(0, indent - 4);
+      continue;
+    }
+    if (line.startsWith('} else')) {
+      indent = Math.max(0, indent - 4);
+      line = line.replace(/\}\s*else\s*:/, 'else:');
+      normalized.push(' '.repeat(indent) + line);
+      indent += 4;
+      continue;
+    }
+    if (line.endsWith('{')) {
+      line = line.slice(0, -1).trim();
+      if (line) normalized.push(' '.repeat(indent) + line);
+      indent += 4;
+      continue;
+    }
+    if (/^(if\s+.+:|for\s+.+:|else:)$/g.test(line)) {
+      normalized.push(' '.repeat(indent) + line);
+      indent += 4;
+      continue;
+    }
+    normalized.push(' '.repeat(indent) + line);
+  }
+  return normalized.join('\n');
+}
+
 // ─── EXECUTOR → frames ────────────────────────────────────
 function makeFrames(steps) {
   let vars = {};
@@ -623,10 +724,14 @@ function makeFrames(steps) {
           desc:`print() shows: <b>${esc(disp(val))}</b>` });
 
       } else if (s.type === 'for') {
-        for (let i = 0; i < s.n; i++) {
+        const start = s.start ?? 0;
+        const end = s.end ?? s.n;
+        const count = end - start;
+        for (let i = start; i < end; i++) {
           vars[s.v] = i;
-          frames.push({ kind:'loop', v:s.v, i, n:s.n, vars:{...vars},
-            desc:`Loop round <b>${i+1} of ${s.n}</b> — <b>${s.v}</b> = <b>${i}</b>` });
+          const loopIndex = i - start;
+          frames.push({ kind:'loop', v:s.v, i, n:count, vars:{...vars},
+            desc:`Loop round <b>${loopIndex+1} of ${count}</b> — <b>${s.v}</b> = <b>${i}</b>` });
           run(s.body);
         }
 
@@ -702,9 +807,12 @@ async function runCode() {
   isRunning = true;
   document.getElementById('run-btn').disabled = true;
 
-  resetAll(); await sleep(80);
+  resetAll(false); await sleep(80);
 
-  const code = document.getElementById('code-editor').value;
+  let code = document.getElementById('code-editor').value;
+  if (currentLang !== 'python') {
+    code = normalizeCode(code, currentLang);
+  }
   let frames;
   try {
     frames = makeFrames(parse(code));
