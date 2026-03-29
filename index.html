@@ -3,44 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Code Animator for Kids</title>
+<title>Code Animator</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Nunito', sans-serif;
-  background: #EEF0FF;
+  background: #F3F4F6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  color: #0F172A;
 }
 
 /* ── HEADER ── */
 header {
-  background: white;
-  padding: 14px 24px;
+  background: #111827;
+  padding: 18px 32px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  border-bottom: 3px solid #E0E7FF;
+  gap: 18px;
+  border-bottom: 1px solid rgba(148,163,184,.24);
+  box-shadow: 0 18px 40px rgba(15,23,42,.18);
 }
 .logo {
-  font-family: 'Fredoka One', cursive;
-  font-size: 26px;
-  color: #4F46E5;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  color: #FFFFFF;
+  font-weight: 800;
 }
-.logo em { color: #F43F5E; font-style: normal; }
-.tagline { color: #9CA3AF; font-size: 14px; font-weight: 700; }
+.logo em { color: #38BDF8; font-style: normal; }
+.tagline {
+  color: #CBD5E1;
+  font-size: 13px;
+  letter-spacing: .3px;
+  font-weight: 500;
+}
 .header-right {
   margin-left: auto;
-  font-size: 13px;
-  color: #C7D2FE;
+  font-size: 12px;
+  color: #94A3B8;
   font-weight: 700;
-  letter-spacing: .5px;
+  letter-spacing: .8px;
+  text-transform: uppercase;
 }
 
 /* ── MAIN LAYOUT ── */
@@ -56,184 +62,248 @@ header {
 /* ── EDITOR PANEL ── */
 .editor-panel {
   width: 44%;
-  min-width: 300px;
-  background: white;
-  border-radius: 20px;
-  border: 2.5px solid #E0E7FF;
-  box-shadow: 0 4px 24px rgba(79,70,229,.1);
+  min-width: 320px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,.18);
+  box-shadow: 0 24px 48px rgba(15,23,42,.08);
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 .panel-hdr {
-  padding: 13px 18px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 17px;
+  padding: 18px 22px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: #0F172A;
+  font-weight: 800;
 }
-.editor-hdr { background: #4F46E5; color: white; }
+.editor-hdr { background: none; color: #0F172A; }
 
 .code-wrap {
   display: flex;
   flex: 1;
-  min-height: 200px;
+  min-height: 280px;
 }
 .line-nums {
-  background: #F5F7FF;
-  padding: 14px 10px 14px 8px;
+  background: #111827;
+  padding: 18px 14px;
   font-family: 'Courier New', monospace;
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: #C4C9EE;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #94A3B8;
   text-align: right;
   user-select: none;
-  min-width: 36px;
-  border-right: 2px solid #E0E7FF;
+  min-width: 48px;
+  border-right: 1px solid rgba(148,163,184,.15);
   overflow: hidden;
+}
+.line-nums span {
+  display: inline-block;
+  width: 100%;
+  padding: 0 4px;
+  color: #94A3B8;
+}
+.line-nums span.active {
+  color: #111827;
+  background: #FACC15;
+  border-radius: 999px;
+  font-weight: 700;
 }
 #code-editor {
   flex: 1;
-  padding: 14px;
+  padding: 24px;
   font-family: 'Courier New', monospace;
-  font-size: 13.5px;
-  line-height: 1.65;
+  font-size: 14px;
+  line-height: 1.75;
   border: none;
   outline: none;
   resize: none;
-  color: #1E1B4B;
-  background: #FAFBFF;
+  color: #E2E8F0;
+  background: #0F172A;
   tab-size: 4;
-  min-height: 200px;
+  min-height: 280px;
 }
+#code-editor::selection { background: #facc15; color: #111827; }
+#code-editor::-moz-selection { background: #facc15; color: #111827; }
 
 .editor-footer {
-  padding: 12px;
+  padding: 14px 22px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-top: 2px solid #E0E7FF;
+  gap: 10px;
+  border-top: 1px solid rgba(148,163,184,.18);
   flex-wrap: wrap;
+  background: #F8FAFC;
 }
 
 .run-btn {
-  padding: 11px 22px;
-  background: #4F46E5;
-  color: white;
+  padding: 12px 24px;
+  background: #111827;
+  color: #F8FAFC;
   border: none;
   border-radius: 12px;
-  font-family: 'Fredoka One', cursive;
-  font-size: 18px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 0 #3730A3;
-  transition: transform .1s, box-shadow .1s;
+  box-shadow: 0 10px 24px rgba(15,23,42,.18);
+  transition: transform .15s ease, background .15s ease;
 }
-.run-btn:hover { background: #4338CA; }
-.run-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3730A3; }
-.run-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: 0 4px 0 #3730A3; }
+.run-btn:hover { background: #0B1120; transform: translateY(-1px); }
+.run-btn:active { transform: translateY(1px); }
+.run-btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; }
+
+.step-btn {
+  padding: 12px 20px;
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(37,99,235,.18);
+  transition: transform .15s ease, background .15s ease;
+}
+.step-btn:hover { background: #1D4ED8; transform: translateY(-1px); }
+.step-btn:active { transform: translateY(1px); }
+.step-btn:disabled { opacity: .6; cursor: not-allowed; box-shadow: none; }
 
 .reset-btn {
-  padding: 9px 16px;
-  background: none;
-  border: 2px solid #E0E7FF;
-  border-radius: 10px;
+  padding: 11px 18px;
+  background: #FFFFFF;
+  border: 1px solid rgba(148,163,184,.28);
+  border-radius: 12px;
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  color: #6B7280;
+  font-weight: 700;
+  color: #475569;
   font-size: 14px;
 }
-.reset-btn:hover { background: #F3F4F6; }
+.reset-btn:hover { background: #EFF2FF; }
 
-.speed-grp {
+.speed-grp,
+.lang-grp {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   font-size: 11px;
-  color: #9CA3AF;
-  font-weight: 800;
+  color: #64748B;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .5px;
 }
-.lang-grp {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: #9CA3AF;
-  font-weight: 800;
-  text-transform: uppercase;
+.lang-grp .spd,
+.speed-grp .spd {
+  padding: 8px 12px;
+  background: #F8FAFC;
+  border: 1px solid rgba(148,163,184,.2);
+  border-radius: 10px;
+  color: #334155;
 }
-.lang-grp .spd { background: #F8F9FD; border-color: transparent; }
 .spd {
-  padding: 5px 10px;
-  background: #F3F4F6;
-  border: 2px solid transparent;
-  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-  transition: all .15s;
+  transition: all .15s ease;
 }
-.spd.active { background: #EEF2FF; border-color: #4F46E5; }
+.spd.active { background: #111827; color: #F8FAFC; border-color: #111827; }
+.spd:hover { background: #E2E8F0; }
+
 
 .examples-sec {
-  padding: 12px 14px;
-  border-top: 2px solid #EEF2FF;
+  padding: 18px 24px;
+  border-top: 1px solid rgba(148,163,184,.18);
 }
 .ex-label {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
-  color: #A5B4FC;
+  color: #475569;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
-  padding: 5px 13px;
-  background: #EEF2FF;
-  border: none;
-  border-radius: 20px;
+  padding: 10px 16px;
+  background: #F8FAFC;
+  border: 1px solid rgba(148,163,184,.22);
+  border-radius: 14px;
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
   font-weight: 700;
   font-size: 13px;
-  color: #4F46E5;
-  transition: all .15s;
+  color: #334155;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
 }
-.chip:hover { background: #4F46E5; color: white; }
+.chip:hover { background: #EEF2FF; transform: translateY(-1px); }
+.chip:focus-visible { outline: 2px solid #2563EB; }
+
+.input-section {
+  padding: 18px 24px;
+  border-top: 1px solid rgba(148,163,184,.18);
+  background: #F8FAFC;
+}
+.input-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+#user-inputs {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid rgba(148,163,184,.4);
+  border-radius: 14px;
+  background: #FFFFFF;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #0F172A;
+  resize: vertical;
+}
+.input-help {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #64748B;
+}
 
 /* ── ANIMATION PANEL ── */
 .anim-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   min-height: 0;
 }
 
 /* Step bar */
 .step-bar {
-  background: white;
-  border-radius: 14px;
-  padding: 11px 16px;
+  background: #111827;
+  color: #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  border: 2.5px solid #E0E7FF;
-  font-size: 14px;
-  color: #374151;
+  gap: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: 15px;
   font-weight: 600;
-  min-height: 48px;
+  min-height: 58px;
+  box-shadow: 0 18px 40px rgba(15,23,42,.10);
 }
 .step-badge {
-  background: #4F46E5;
-  color: white;
-  border-radius: 8px;
-  padding: 3px 10px;
+  background: #38BDF8;
+  color: #0F172A;
+  border-radius: 999px;
+  padding: 5px 14px;
   font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
@@ -243,17 +313,17 @@ header {
 /* Row for vars + output */
 .stage-row {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   flex: 1;
   min-height: 0;
 }
 
 /* Shared card */
 .stage-card {
-  background: white;
-  border-radius: 20px;
-  border: 2.5px solid #E0E7FF;
-  box-shadow: 0 4px 24px rgba(0,0,0,.07);
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid rgba(148,163,184,.18);
+  box-shadow: 0 18px 40px rgba(15,23,42,.06);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -261,45 +331,48 @@ header {
   overflow: hidden;
 }
 .card-hdr {
-  padding: 10px 16px;
-  font-family: 'Fredoka One', cursive;
+  padding: 16px 20px;
+  font-family: 'Nunito', sans-serif;
   font-size: 15px;
+  font-weight: 800;
+  color: #0F172A;
 }
-.vars-hdr { background: #0EA5E9; color: white; }
-.out-hdr  { background: #F59E0B; color: white; }
+.vars-hdr { background: #0F172A; color: #F8FAFC; }
+.out-hdr  { background: #111827; color: #F8FAFC; }
 
 #variables-grid {
-  padding: 14px;
+  padding: 18px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 14px;
   align-content: flex-start;
   overflow-y: auto;
   flex: 1;
 }
 #output-list {
-  padding: 12px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   overflow-y: auto;
   flex: 1;
 }
 
 .empty-hint {
-  color: #D1D5DB;
+  color: #94A3B8;
   font-size: 14px;
   font-weight: 600;
-  padding: 4px;
+  padding: 6px;
 }
 
 /* ── VARIABLE CARDS ── */
 .var-card {
   border-radius: 14px;
-  padding: 10px 14px;
-  min-width: 72px;
+  padding: 14px 18px;
+  min-width: 92px;
   text-align: center;
-  border: 3px solid;
+  border: 1px solid rgba(148,163,184,.24);
+  background: #F8FAFC;
   animation: popIn .35s cubic-bezier(.34,1.56,.64,1) both;
 }
 .var-card.shake { animation: shake .4s ease both !important; }
@@ -316,31 +389,31 @@ header {
 
 .var-label {
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
+  letter-spacing: 1.2px;
+  margin-bottom: 6px;
   opacity: .85;
 }
 .var-val {
-  font-family: 'Fredoka One', cursive;
-  font-size: 22px;
-  line-height: 1.2;
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  line-height: 1.3;
   word-break: break-all;
 }
 
 /* ── OUTPUT BUBBLES ── */
 .print-bubble {
   display: inline-flex;
-  align-items: flex-start;
-  gap: 8px;
-  background: #FEF3C7;
-  border: 2px solid #FCD34D;
-  border-radius: 12px 12px 12px 4px;
-  padding: 8px 14px;
+  align-items: center;
+  gap: 10px;
+  background: #eff6ff;
+  border: 1px solid rgba(56,189,248,.34);
+  border-radius: 18px;
+  padding: 12px 18px;
   font-size: 15px;
   font-weight: 700;
-  color: #92400E;
+  color: #0f172a;
   animation: slideIn .3s ease both;
   align-self: flex-start;
   max-width: 100%;
@@ -349,16 +422,17 @@ header {
 .cond-bubble {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border-radius: 12px 12px 12px 4px;
-  padding: 8px 14px;
+  gap: 10px;
+  border-radius: 18px;
+  padding: 12px 18px;
   font-size: 14px;
   font-weight: 700;
   animation: slideIn .3s ease both;
   align-self: flex-start;
+  border: 1px solid transparent;
 }
-.cond-true  { background: #D1FAE5; border: 2px solid #34D399; color: #065F46; }
-.cond-false { background: #FEE2E2; border: 2px solid #F87171; color: #991B1B; }
+.cond-true  { background: #ECFDF5; border-color: #22C55E; color: #134E4A; }
+.cond-false { background: #FEF2F2; border-color: #F43F5E; color: #881337; }
 
 @keyframes slideIn {
   from { transform: translateX(-14px); opacity: 0; }
@@ -369,19 +443,19 @@ header {
 .loop-pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: #FF9A3C;
+  gap: 8px;
+  background: #2563EB;
   color: white;
-  border-radius: 8px;
-  padding: 3px 10px;
+  border-radius: 999px;
+  padding: 6px 14px;
   font-size: 13px;
   font-weight: 800;
 }
 .ldot {
   display: inline-block;
-  width: 9px; height: 9px;
+  width: 10px; height: 10px;
   border-radius: 50%;
-  background: rgba(255,255,255,.3);
+  background: rgba(255,255,255,.45);
   transition: background .2s;
 }
 .ldot.done { background: white; }
@@ -402,21 +476,39 @@ header {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #C7D2FE; border-radius: 3px; }
+
+.page-footer {
+  max-width: 1180px;
+  margin: 0 auto 24px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 18px;
+  color: #334155;
+  font-size: 14px;
+}
+.page-footer strong { color: #4f46e5; }
+.page-footer a { color: #4f46e5; text-decoration: none; font-weight: 700; }
+.page-footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Code<em>Animator</em></div>
-  <div class="tagline">Watch your code come alive — step by step!</div>
-  <div class="header-right">Python, C++, Java styles supported ✨</div>
+  <div class="logo">Vajra<em>Cognixia.in</em></div>
+  <div class="tagline">Professional code walkthrough</div>
+  <div class="header-right">Python · C++ · Java</div>
 </header>
 
 <div class="main">
 
   <!-- ══ LEFT: Editor ══ -->
   <div class="editor-panel">
-    <div class="panel-hdr editor-hdr">✏️ Write your code here</div>
+    <div class="panel-hdr editor-hdr">Code Editor</div>
 
     <div class="code-wrap">
       <div class="line-nums" id="line-nums">1</div>
@@ -434,10 +526,12 @@ else:
 
     <div class="editor-footer">
       <button class="run-btn" id="run-btn" onclick="runCode()">▶ Run!</button>
+      <button class="step-btn" id="step-btn" onclick="nextStep()">⏭ Step</button>
       <button class="reset-btn" onclick="resetAll()">↺ Clear</button>
       <div class="lang-grp">
         Language
-        <button class="spd active lang-btn" data-lang="python" onclick="setLanguage('python', this)">Python-like</button>
+        <button class="spd active lang-btn" data-lang="auto" onclick="setLanguage('auto', this)">Any</button>
+        <button class="spd lang-btn" data-lang="python" onclick="setLanguage('python', this)">Python-like</button>
         <button class="spd lang-btn" data-lang="cpp" onclick="setLanguage('cpp', this)">C++</button>
         <button class="spd lang-btn" data-lang="java" onclick="setLanguage('java', this)">Java</button>
       </div>
@@ -447,6 +541,12 @@ else:
         <button class="spd" onclick="setSpeed(450,this)">🐇</button>
         <button class="spd" onclick="setSpeed(100,this)">⚡</button>
       </div>
+    </div>
+
+    <div class="input-section">
+      <div class="input-label">User input values</div>
+      <textarea id="user-inputs" placeholder="n=5\narr=[1,2,3,4,5]\ntarget=3"></textarea>
+      <div class="input-help">Enter one name=value per line. Use arrays like <code>[1,2,3]</code>. Works with Java Scanner inputs such as <code>n=sc.nextInt()</code>.</div>
     </div>
 
     <div class="examples-sec">
@@ -493,6 +593,11 @@ else:
 
 </div>
 
+<footer class="page-footer">
+  <div>Made with care for smooth code animation and learning.</div>
+  <div><strong>VajraCognixia.in</strong> · Best Code Animator Experience</div>
+</footer>
+
 <script>
 // ─── CONFIG ───────────────────────────────────────────────
 const COLORS = [
@@ -517,24 +622,46 @@ let animSpeed = 950;
 let varColors = {};
 let colorIdx = 0;
 let isRunning = false;
-let currentLang = 'python';
+let frames = [];
+let currentFrame = 0;
+let currentLang = 'auto';
 
 // ─── UI HELPERS ───────────────────────────────────────────
 function syncLines() {
   const lines = document.getElementById('code-editor').value.split('\n').length;
   document.getElementById('line-nums').innerHTML =
-    Array.from({length: lines}, (_, i) => i + 1).join('<br>');
+    Array.from({length: lines}, (_, i) => `<span data-line="${i}">${i+1}</span><br>`).join('');
+}
+function clearHighlight() {
+  document.querySelectorAll('#line-nums span.active').forEach(el => el.classList.remove('active'));
+}
+function highlightLine(line) {
+  if (line == null) return;
+  clearHighlight();
+  const marker = document.querySelector(`#line-nums span[data-line="${line}"]`);
+  if (marker) marker.classList.add('active');
+  const editor = document.getElementById('code-editor');
+  const lines = editor.value.split('\n');
+  if (line < 0 || line >= lines.length) return;
+  let start = 0;
+  for (let i = 0; i < line; i++) start += lines[i].length + 1;
+  const end = start + lines[line].length;
+  try { editor.focus(); } catch {}
+  editor.setSelectionRange(start, end);
+  const lineHeight = 24;
+  editor.scrollTop = Math.max(0, line * lineHeight - 120);
 }
 syncLines();
-setLanguage('python', document.querySelector('.lang-btn[data-lang="python"]'));
+setLanguage('auto', document.querySelector('.lang-btn[data-lang="auto"]'));
 function loadEx(k) {
   if (k === 'cpp' || k === 'java') {
     setLanguage(k, document.querySelector(`.lang-btn[data-lang="${k}"]`));
   } else {
-    setLanguage('python', document.querySelector(`.lang-btn[data-lang="python"]`));
+    setLanguage('auto', document.querySelector(`.lang-btn[data-lang="auto"]`));
   }
   document.getElementById('code-editor').value = EXAMPLES[k];
   syncLines();
+  resetAll();
 }
 
 function setSpeed(s, btn) {
@@ -548,15 +675,102 @@ function setLanguage(lang, btn) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   resetAll();
-  const label = lang === 'python' ? 'Python-like code' : lang === 'cpp' ? 'C++ code' : 'Java code';
+  const label = lang === 'python' ? 'Python-like code' : lang === 'cpp' ? 'C++ code' : lang === 'java' ? 'Java code' : 'Any programming code';
   document.getElementById('step-bar').innerHTML = `👋 Press <strong style="color:#4F46E5">▶ Run!</strong> and watch ${label} come alive!`;
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+function getUserInputMap() {
+  const raw = document.getElementById('user-inputs').value;
+  const map = {};
+  raw.split('\n').forEach(line => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('//')) return;
+    const eq = trimmed.indexOf('=');
+    if (eq < 0) return;
+    const name = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (!name || value === '') return;
+    if (/^\[.*\]$/.test(value)) {
+      try { map[name] = JSON.parse(value.replace(/'/g, '"')); } catch { map[name] = value; }
+    } else if (/^-?\d+$/.test(value)) {
+      map[name] = Number(value);
+    } else if (/^-?\d+\.\d+$/.test(value)) {
+      map[name] = Number(value);
+    } else if (/^".*"$/.test(value) || /^'.*'$/.test(value)) {
+      map[name] = value.slice(1, -1);
+    } else {
+      map[name] = value;
+    }
+  });
+  return map;
+}
+
+function prepareExecution() {
+  let code = document.getElementById('code-editor').value;
+  const inputMap = getUserInputMap();
+  let helperFunctions = {};
+  if (currentLang !== 'python') {
+    const extracted = compileFunctionDefs(code, currentLang, inputMap);
+    code = normalizeCode(extracted.mainCode, currentLang, inputMap);
+    helperFunctions = extracted.functions;
+  } else {
+    code = normalizeCode(code, currentLang, inputMap);
+  }
+  frames = makeFrames(parse(code), helperFunctions);
+  currentFrame = 0;
+}
+
+function runOneFrame() {
+  if (currentFrame >= frames.length) return false;
+  const f = frames[currentFrame];
+  let extra = '';
+  if (f.kind === 'loop') extra = ' ' + loopPill(f.v, f.i, f.n);
+  const lineInfo = typeof f.line === 'number' ? ` <small style="opacity:.7">line ${f.line + 1}</small>` : '';
+  document.getElementById('step-bar').innerHTML =
+    `<span class="step-badge">Step ${currentFrame+1} / ${frames.length}</span> ${f.desc}${lineInfo}${extra}`;
+  highlightLine(f.line);
+  if      (f.kind === 'assign') renderVar(f.name, f.val);
+  else if (f.kind === 'loop')   renderVar(f.v, f.i);
+  else if (f.kind === 'print')  renderPrint(f.val);
+  else if (f.kind === 'cond')   renderCond(f.cond, f.res);
+  currentFrame++;
+  return true;
+}
+
+function nextStep() {
+  if (isRunning) return;
+  if (!frames.length || currentFrame >= frames.length) {
+    resetAll(false);
+    try {
+      prepareExecution();
+    } catch(e) {
+      document.getElementById('step-bar').innerHTML =
+        '❌ Oops! There might be a bug in your code. Check it and try again!';
+      return;
+    }
+    if (!frames.length) {
+      document.getElementById('step-bar').innerHTML =
+        '🤔 Nothing to animate! Try adding variables, loops or print().';
+      return;
+    }
+    clearHints();
+  }
+
+  if (runOneFrame() && currentFrame >= frames.length) {
+    document.getElementById('step-bar').innerHTML =
+      `<span class="celebration">🎉 All done! ${frames.length} steps ran perfectly!</span>`;
+  }
+}
+
 function resetAll(cancel = true) {
   if (cancel && isRunning) { isRunning = false; }
   varColors = {}; colorIdx = 0;
+  if (cancel) {
+    frames = []; currentFrame = 0;
+  }
+  clearHighlight();
   if (cancel) {
     document.getElementById('run-btn').disabled = false;
   }
@@ -582,7 +796,6 @@ function esc(s) {
   return String(s)
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 // ─── PARSER ───────────────────────────────────────────────
 function parse(code) {
   const lines = code.split('\n');
@@ -596,7 +809,7 @@ function parse(code) {
     while (pos < lines.length) {
       const line = lines[pos];
       const t = tri(line);
-      if (!t || t.startsWith('#')) { pos++; continue; }
+      if (!t || t.startsWith('#') || t.startsWith('//') || t.startsWith('/*') || t.startsWith('*/')) { pos++; continue; }
       const i = ind(line);
       if (i < minInd) break;
 
@@ -646,16 +859,221 @@ function evalE(expr, vars) {
   } catch { return '???'; }
 }
 
-function normalizeCode(code, lang) {
-  if (lang === 'python') return code;
+function applyInputMap(code, inputMap = {}) {
+  const readVal = name => inputMap[name] !== undefined ? JSON.stringify(inputMap[name]) : null;
+
+  code = code.replace(/import\s+java\.util\.Scanner\s*;/g, '');
+  code = code.replace(/(?:final\s+)?Scanner\s+[A-Za-z_]\w*\s*=\s*new\s+Scanner\s*\(\s*System\.in\s*\)\s*;/g, '');
+  code = code.replace(/new\s+Scanner\s*\(\s*System\.in\s*\)/g, '');
+  code = code.replace(/([A-Za-z_]\w*)\s*=\s*[A-Za-z_]\w*\.next(?:Int|Long|Double|Float)\(\)\s*;/g,
+    (match, name) => {
+      const val = readVal(name);
+      return `${name} = ${val ?? 5};`;
+    });
+  code = code.replace(/([A-Za-z_]\w*)\s*=\s*[A-Za-z_]\w*\.next(?:Line|)\(\)\s*;/g,
+    (match, name) => {
+      const val = readVal(name);
+      return `${name} = ${val !== null ? JSON.stringify(val) : '"text"'};`;
+    });
+  code = code.replace(/([A-Za-z_]\w*)\s*=\s*[A-Za-z_]\w*\.next\(\)\s*;/g,
+    (match, name) => {
+      const val = readVal(name);
+      return `${name} = ${val !== null ? JSON.stringify(val) : '"text"'};`;
+    });
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*>>\s*([A-Za-z_]\w*)\s*;/g,
+    (match, a, b) => {
+      const av = readVal(a); const bv = readVal(b);
+      return `${a} = ${av ?? 5}; ${b} = ${bv ?? 3};`;
+    });
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*\[\s*i\s*\]\s*;/g,
+    (match, name) => {
+      const arr = inputMap[name];
+      return Array.isArray(arr)
+        ? `${name}[i] = ${JSON.stringify(arr)}[i];`
+        : `${name}[i] = i + 1;`;
+    });
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*\[[^\]]+\]\s*;/g,
+    (match, name) => `${name} = 1;`);
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*;/g,
+    (match, name) => {
+      const val = readVal(name);
+      return `${name} = ${val ?? 5};`;
+    });
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[\s*i\s*\])/g,
+    (match, expr) => {
+      const name = expr.replace(/\s*\[.*$/, '');
+      const arr = inputMap[name];
+      return Array.isArray(arr)
+        ? `(${expr} = ${JSON.stringify(arr)}[i])`
+        : `(${expr} = i + 1)`;
+    });
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[[^\]]+\])/g,
+    (match, expr) => `(${expr} = 1)`);
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)/g,
+    (match, name) => {
+      const val = readVal(name);
+      return `(${name} = ${val ?? 5})`;
+    });
+
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*\(\s*([^)]+)\s*\)\s*;/g,
+    (match, name, count) => {
+      const arr = inputMap[name];
+      return Array.isArray(arr)
+        ? `${name} = ${JSON.stringify(arr)};`
+        : `${name} = Array(${count}).fill(0);`;
+    });
+
+  return code;
+}
+
+function compileFunctionDefs(code, lang, inputMap = {}) {
+  const mainLines = [];
+  const functions = {};
+  let mode = null;
+  let depth = 0;
+  let buffer = [];
+  let funcName = '';
+  const header = /^\s*(?:public\s+static\s+|static\s+|inline\s+)?(?:int|bool|double|float|long|auto|void|String)\s+([A-Za-z_]\w*)\s*\(([^)]*)\)\s*\{/;
+
+  for (const rawLine of code.split('\n')) {
+    if (!mode) {
+      const m = rawLine.match(header);
+      if (m) {
+        funcName = m[1];
+        if (funcName === 'main') {
+          mode = 'main';
+          depth = 1;
+          continue;
+        }
+        mode = 'func';
+        depth = 1;
+        buffer = [rawLine];
+        continue;
+      }
+      mainLines.push(rawLine);
+      continue;
+    }
+
+    const opens = (rawLine.match(/\{/g) || []).length;
+    const closes = (rawLine.match(/\}/g) || []).length;
+    depth += opens - closes;
+
+    if (mode === 'main') {
+      if (depth === 0) {
+        mode = null;
+        continue;
+      }
+      mainLines.push(rawLine);
+      continue;
+    }
+
+    buffer.push(rawLine);
+    if (depth === 0) {
+      const fn = buildJsFunction(buffer.join('\n'), funcName, lang, inputMap);
+      if (fn) functions[funcName] = fn;
+      mode = null;
+      buffer = [];
+      funcName = '';
+    }
+  }
+
+  return { mainCode: mainLines.join('\n'), functions };
+}
+
+function normalizeParamList(raw) {
+  return raw.split(',').map(p => p.trim()).filter(Boolean).map(param => {
+    return param
+      .replace(/^(const\s+)?(?:vector<[^>]+>&|vector<[^>]+>|int|double|float|long|bool|char|auto|String)\s*/g, '')
+      .replace(/&/g, '').trim();
+  }).join(', ');
+}
+
+function buildJsFunction(raw, name, lang, inputMap = {}) {
+  let code = raw;
+  code = applyInputMap(code, inputMap);
   code = code.replace(/\/\/.*$/gm, '');
   code = code.replace(/\/\*[\s\S]*?\*\//g, '');
   code = code.replace(/^\s*#.*$/gm, '');
   code = code.replace(/using\s+namespace\s+std\s*;/g, '');
+  code = code.replace(/#include\s*<[^>]+>/g, '');
   code = code.replace(/std::cout/g, 'cout');
   code = code.replace(/std::endl/g, 'endl');
   code = code.replace(/System\.out\.println\s*\(/g, 'print(');
   code = code.replace(/System\.out\.print\s*\(/g, 'print(');
+  code = code.replace(/printf\s*\(([^)]+)\)\s*;/g, 'print($1);');
+  code = code.replace(/cout\s*<<\s*([^;]+);/g, (match, content) => {
+    const parts = content.split(/<<\s*/).map(p => p.trim()).filter(Boolean).map(p => p === 'endl' ? '"\n"' : p);
+    return `print(${parts.join(' + ')})`;
+  });
+  code = code.replace(/\breturn\s+\d+\s*;/g, '');
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*\(\s*([^)]+)\s*\)\s*;/g, 'var $1 = Array($2).fill(0);');
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*=\s*\{([^}]+)\}\s*;/g, 'var $1 = [$2];');
+  code = code.replace(/\bconst\s+vector<[^>]+>&\s*([A-Za-z_]\w*)/g, '$1');
+  code = code.replace(/\bvector<[^>]+>&\s*([A-Za-z_]\w*)/g, '$1');
+  code = code.replace(/\bvector<[^>]+>\s*([A-Za-z_]\w*)/g, '$1');
+  code = code.replace(/(\w+)\.size\(\)/g, '$1.length');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*>>\s*([A-Za-z_]\w*)\s*;/g, '$1 = 5; $2 = 3;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[\s*i\s*\])\s*;/g, '$1 = i + 1;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[[^\]]+\])\s*;/g, '$1 = 1;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*;/g, '$1 = 5;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[\s*i\s*\])/g, '($1 = i + 1)');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[[^\]]+\])/g, '($1 = 1)');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)/g, '($1 = 5)');
+  code = code.replace(/\b(int|double|float|long|bool|char|auto)\s+([A-Za-z_]\w*)\s*=/g, 'var $2 = ');
+  code = code.replace(/\b(int|double|float|long|bool|char|auto)\s+([A-Za-z_]\w*)\s*;/g, 'var $2 = 0;');
+
+  code = code.replace(/^\s*(?:public\s+static\s+|static\s+|inline\s+)?(?:int|bool|double|float|long|auto|void|String)\s+([A-Za-z_]\w*)\s*\(([^)]*)\)\s*\{/m,
+    (_, fnName, rawParams) => {
+      const params = normalizeParamList(rawParams);
+      return `const ${fnName} = function ${fnName}(${params}) {`;
+    });
+
+  try {
+    return eval(`(function(){ ${code}\nreturn ${name}; })()`);
+  } catch (e) {
+    return null;
+  }
+}
+
+function normalizeCode(code, lang, inputMap = {}) {
+  if (lang === 'python') return code;
+  code = applyInputMap(code, inputMap);
+  code = applyInputMap(code, inputMap);
+  code = code.replace(/\/\/.*$/gm, '');
+  code = code.replace(/\/\*[\s\S]*?\*\//g, '');
+  code = code.replace(/^\s*#.*$/gm, '');
+  code = code.replace(/#include\s*<[^>]+>/g, '');
+  code = code.replace(/using\s+namespace\s+std\s*;/g, '');
+  code = code.replace(/std::vector/g, 'vector');
+  code = code.replace(/std::cout/g, 'cout');
+  code = code.replace(/std::endl/g, 'endl');
+  code = code.replace(/System\.out\.println\s*\(/g, 'print(');
+  code = code.replace(/System\.out\.print\s*\(/g, 'print(');
+  code = code.replace(/printf\s*\(([^)]+)\)\s*;/g, 'print($1);');
+  code = code.replace(/scanf\s*\(([^)]+)\)\s*;/g, '');
+  code = code.replace(/cout\s*<<\s*([^;]+);/g, (match, content) => {
+    const parts = content.split(/<<\s*/).map(p => p.trim()).filter(Boolean).map(p => p === 'endl' ? '"\n"' : p);
+    return `print(${parts.join(' + ')})`;
+  });
+  code = code.replace(/\breturn\s+\d+\s*;/g, '');
+
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*>>\s*([A-Za-z_]\w*)\s*;/g, '$1 = 5; $2 = 3;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[\s*i\s*\])\s*;/g, '$1 = i + 1;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[[^\]]+\])\s*;/g, '$1 = 1;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)\s*;/g, '$1 = 5;');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[\s*i\s*\])/g, '($1 = i + 1)');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*\[[^\]]+\])/g, '($1 = 1)');
+  code = code.replace(/cin\s*>>\s*([A-Za-z_]\w*)/g, '($1 = 5)');
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*\(\s*([^)]+)\s*\)\s*;/g, '$1 = Array($2).fill(0);');
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*=\s*\{([^}]+)\}\s*;/g, '$1 = [$2];');
+  code = code.replace(/\bvector<[^>]+>\s+([A-Za-z_]\w*)\s*;/g, '$1 = [];');
+  code = code.replace(/(\w+)\.size\(\)/g, '$1.length');
 
   code = code.replace(/\b(?:int|double|float|long|bool|char|String|auto)\s+([A-Za-z_]\w*)\s*=\s*([^;]+);/g, '$1 = $2');
   code = code.replace(/\b(?:int|double|float|long|bool|char|String|auto)\s+([A-Za-z_]\w*)\s*;/g, '$1 = 0');
@@ -706,8 +1124,8 @@ function normalizeCode(code, lang) {
 }
 
 // ─── EXECUTOR → frames ────────────────────────────────────
-function makeFrames(steps) {
-  let vars = {};
+function makeFrames(steps, helperFunctions = {}) {
+  let vars = { ...helperFunctions };
   const frames = [];
 
   function run(steps) {
@@ -715,12 +1133,12 @@ function makeFrames(steps) {
       if (s.type === 'assign') {
         const val = evalE(s.expr, vars);
         vars[s.name] = val;
-        frames.push({ kind:'assign', name:s.name, val, vars:{...vars},
+        frames.push({ kind:'assign', name:s.name, val, vars:{...vars}, line:s.ln,
           desc:`Setting memory box <b>${s.name}</b> = <b>${esc(disp(val))}</b>` });
 
       } else if (s.type === 'print') {
         const val = evalE(s.expr, vars);
-        frames.push({ kind:'print', val, vars:{...vars},
+        frames.push({ kind:'print', val, vars:{...vars}, line:s.ln,
           desc:`print() shows: <b>${esc(disp(val))}</b>` });
 
       } else if (s.type === 'for') {
@@ -730,14 +1148,14 @@ function makeFrames(steps) {
         for (let i = start; i < end; i++) {
           vars[s.v] = i;
           const loopIndex = i - start;
-          frames.push({ kind:'loop', v:s.v, i, n:count, vars:{...vars},
+          frames.push({ kind:'loop', v:s.v, i, n:count, vars:{...vars}, line:s.ln,
             desc:`Loop round <b>${loopIndex+1} of ${count}</b> — <b>${s.v}</b> = <b>${i}</b>` });
           run(s.body);
         }
 
       } else if (s.type === 'if') {
         const res = !!evalE(s.cond, vars);
-        frames.push({ kind:'cond', cond:s.cond, res, vars:{...vars},
+        frames.push({ kind:'cond', cond:s.cond, res, vars:{...vars}, line:s.ln,
           desc:`Checking <b>${esc(s.cond)}</b> → ${res ? '✅ TRUE → going in!' : '❌ FALSE → skipping!'}` });
         run(res ? s.then : s.els);
       }
@@ -806,16 +1224,10 @@ async function runCode() {
   if (isRunning) return;
   isRunning = true;
   document.getElementById('run-btn').disabled = true;
-
   resetAll(false); await sleep(80);
 
-  let code = document.getElementById('code-editor').value;
-  if (currentLang !== 'python') {
-    code = normalizeCode(code, currentLang);
-  }
-  let frames;
   try {
-    frames = makeFrames(parse(code));
+    prepareExecution();
   } catch(e) {
     document.getElementById('step-bar').innerHTML =
       '❌ Oops! There might be a bug in your code. Check it and try again!';
@@ -834,22 +1246,8 @@ async function runCode() {
 
   clearHints();
 
-  for (let fi = 0; fi < frames.length; fi++) {
-    if (!isRunning) break;
-    const f = frames[fi];
-
-    // Step bar
-    let extra = '';
-    if (f.kind === 'loop') extra = ' ' + loopPill(f.v, f.i, f.n);
-    document.getElementById('step-bar').innerHTML =
-      `<span class="step-badge">Step ${fi+1} / ${frames.length}</span> ${f.desc}${extra}`;
-
-    // Render
-    if      (f.kind === 'assign') renderVar(f.name, f.val);
-    else if (f.kind === 'loop')   renderVar(f.v, f.i);
-    else if (f.kind === 'print')  renderPrint(f.val);
-    else if (f.kind === 'cond')   renderCond(f.cond, f.res);
-
+  while (currentFrame < frames.length && isRunning) {
+    runOneFrame();
     await sleep(animSpeed);
   }
 
